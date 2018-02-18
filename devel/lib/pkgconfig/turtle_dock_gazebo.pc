@@ -1,0 +1,8 @@
+prefix=/home/user/Documents/ros-turtlebot-docking/devel
+
+Name: turtle_dock_gazebo
+Description: Description of turtle_dock_gazebo
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/user/Documents/ros-turtlebot-docking/devel/lib 
+Requires: 
