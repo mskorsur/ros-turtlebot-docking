@@ -25,11 +25,13 @@ struct LandmarkDistance_
 
   LandmarkDistance_()
     : name()
-    , distance(0.0)  {
+    , distance(0.0)
+    , z_orientation(0.0)  {
     }
   LandmarkDistance_(const ContainerAllocator& _alloc)
     : name(_alloc)
-    , distance(0.0)  {
+    , distance(0.0)
+    , z_orientation(0.0)  {
   (void)_alloc;
     }
 
@@ -40,6 +42,9 @@ struct LandmarkDistance_
 
    typedef double _distance_type;
   _distance_type distance;
+
+   typedef double _z_orientation_type;
+  _z_orientation_type z_orientation;
 
 
 
@@ -118,12 +123,12 @@ struct MD5Sum< ::robot_messages::LandmarkDistance_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "e2f8ddf8c9e39a28149179429f5ae342";
+    return "435047e3d21c4581dc109651649042ee";
   }
 
   static const char* value(const ::robot_messages::LandmarkDistance_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0xe2f8ddf8c9e39a28ULL;
-  static const uint64_t static_value2 = 0x149179429f5ae342ULL;
+  static const uint64_t static_value1 = 0x435047e3d21c4581ULL;
+  static const uint64_t static_value2 = 0xdc109651649042eeULL;
 };
 
 template<class ContainerAllocator>
@@ -144,6 +149,7 @@ struct Definition< ::robot_messages::LandmarkDistance_<ContainerAllocator> >
   {
     return "string name 	# Name of the simulated docking station landmark\n\
 float64 distance 	# Distance to the landmark, in meters\n\
+float64 z_orientation	# Orientation of the robot, in radians\n\
 ";
   }
 
@@ -164,6 +170,7 @@ namespace serialization
     {
       stream.next(m.name);
       stream.next(m.distance);
+      stream.next(m.z_orientation);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -186,6 +193,8 @@ struct Printer< ::robot_messages::LandmarkDistance_<ContainerAllocator> >
     Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.name);
     s << indent << "distance: ";
     Printer<double>::stream(s, indent + "  ", v.distance);
+    s << indent << "z_orientation: ";
+    Printer<double>::stream(s, indent + "  ", v.z_orientation);
   }
 };
 

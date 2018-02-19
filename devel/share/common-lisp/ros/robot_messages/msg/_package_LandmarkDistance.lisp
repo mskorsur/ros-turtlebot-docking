@@ -3,4 +3,6 @@
           NAME
           DISTANCE-VAL
           DISTANCE
+          Z_ORIENTATION-VAL
+          Z_ORIENTATION
 ))

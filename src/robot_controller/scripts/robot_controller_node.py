@@ -1,6 +1,7 @@
 #!/usr/bin/env python
  
 import rospy
+import math
 from robot_messages.msg import LandmarkDistance
 from std_msgs.msg import String
 from kobuki_msgs.msg import DockInfraRed
@@ -17,6 +18,7 @@ class RobotController(object):
 	  #extract message data
 	  sensor_name = msg.name
 	  sensor_distance = msg.distance
+	  robot_orientation = math.degrees(msg.z_orientation)
 	  
 	  #create publishing dock_ir message and populate header
 	  dock_ir_msg = DockInfraRed()
@@ -39,41 +41,102 @@ class RobotController(object):
       def rightSensorDetected(self, dock_ir_msg, sensor_distance, sensor_state_msg):
 	  data = []
 	  if sensor_distance <= 2 and sensor_distance > 0.8:
-	      data.append((DockInfraRed.FAR_RIGHT))
-	      dock_ir_msg.data = data
-	      self._publisher.publish(dock_ir_msg)
-	      self._core_pub.publish(sensor_state_msg)
+	      if robot_orientation >= 85 and robot_orientation <= 95:
+		 data.append(50)
+		 data.append(50)
+		 data.append((DockInfraRed.FAR_RIGHT)) 
+		 dock_ir_msg.data = data
+		 self._publisher.publish(dock_ir_msg)
+	         self._core_pub.publish(sensor_state_msg)
+	      else:
+		 data.append((DockInfraRed.FAR_RIGHT))
+		 data.append((DockInfraRed.FAR_RIGHT))
+		 data.append((DockInfraRed.FAR_RIGHT)) 
+		 dock_ir_msg.data = data
+		 self._publisher.publish(dock_ir_msg)
+	         self._core_pub.publish(sensor_state_msg)
 	  elif sensor_distance <= 0.8:
-	      data.append((DockInfraRed.NEAR_RIGHT))
-	      dock_ir_msg.data = data
-	      self._publisher.publish(dock_ir_msg)
-	      self._core_pub.publish(sensor_state_msg)
+	      if robot_orientation >= 85 and robot_orientation <= 95:
+		 data.append(50)
+		 data.append(50)
+	         data.append((DockInfraRed.NEAR_RIGHT))
+	         dock_ir_msg.data = data
+	         self._publisher.publish(dock_ir_msg)
+	         self._core_pub.publish(sensor_state_msg)
+	      elif:
+		 data.append((DockInfraRed.NEAR_RIGHT))
+	         data.append((DockInfraRed.NEAR_RIGHT))
+	         data.append((DockInfraRed.NEAR_RIGHT))
+	         dock_ir_msg.data = data
+	         self._publisher.publish(dock_ir_msg)
+	         self._core_pub.publish(sensor_state_msg)
       
       def leftSensorDetected(self, dock_ir_msg, sensor_distance, sensor_state_msg):
 	  data = []
 	  if sensor_distance <= 2 and sensor_distance > 0.8:
-	      data.append((DockInfraRed.FAR_LEFT))
-	      dock_ir_msg.data = data
-	      self._publisher.publish(dock_ir_msg)
-	      self._core_pub.publish(sensor_state_msg)
+	      if robot_orientation >= -95 and robot_orientation <= -85:
+		 data.append((DockInfraRed.FAR_LEFT)) 
+	         data.append(50)
+	         data.append(50)
+	         dock_ir_msg.data = data
+	         self._publisher.publish(dock_ir_msg)
+	         self._core_pub.publish(sensor_state_msg)
+	      else:
+		 data.append((DockInfraRed.FAR_LEFT)) 
+	         data.append((DockInfraRed.FAR_LEFT))
+	         data.append((DockInfraRed.FAR_LEFT))
+	         dock_ir_msg.data = data
+	         self._publisher.publish(dock_ir_msg)
+	         self._core_pub.publish(sensor_state_msg)
 	  elif sensor_distance <= 0.8:
-	      data.append((DockInfraRed.NEAR_LEFT))
-	      dock_ir_msg.data = data
-	      self._publisher.publish(dock_ir_msg)
-	      self._core_pub.publish(sensor_state_msg)
+	      if robot_orientation >= -95 and robot_orientation <= -85:
+		 data.append((DockInfraRed.NEAR_LEFT))
+		 data.append(50)
+	         data.append(50)
+		 dock_ir_msg.data = data
+	         self._publisher.publish(dock_ir_msg)
+		 self._core_pub.publish(sensor_state_msg)
+	      else:
+		 data.append((DockInfraRed.NEAR_LEFT))
+	         data.append((DockInfraRed.NEAR_LEFT))
+	         data.append((DockInfraRed.NEAR_LEFT))
+	         dock_ir_msg.data = data
+	         self._publisher.publish(dock_ir_msg)
+	         self._core_pub.publish(sensor_state_msg)
+		
       
       def centerSensorDetected(self, dock_ir_msg, sensor_distance, sensor_state_msg):
 	  data = []
 	  if sensor_distance <= 2 and sensor_distance > 0.8:
-	      data.append((DockInfraRed.FAR_CENTER))
-	      dock_ir_msg.data = data
-	      self._publisher.publish(dock_ir_msg)
-	      self._core_pub.publish(sensor_state_msg)
+	     if robot_orientation >= -5 and robot_orientation <= 5:
+		data.append() 
+		data.append((DockInfraRed.FAR_CENTER)) 
+		data.append()
+		dock_ir_msg.data = data
+		self._publisher.publish(dock_ir_msg)
+		self._core_pub.publish(sensor_state_msg)
+	    else:
+	        data.append((DockInfraRed.FAR_CENTER)) 
+		data.append((DockInfraRed.FAR_CENTER)) 
+		data.append((DockInfraRed.FAR_CENTER))
+		dock_ir_msg.data = data
+		self._publisher.publish(dock_ir_msg)
+		self._core_pub.publish(sensor_state_msg)
 	  elif sensor_distance <= 0.8 and sensor_distance > 0.45:
-	      data.append((DockInfraRed.NEAR_CENTER))
-	      dock_ir_msg.data = data
-	      self._publisher.publish(dock_ir_msg)
-	      self._core_pub.publish(sensor_state_msg)
+		if robot_orientation >= -5 and robot_orientation <= 5:
+		   data.append(50)
+		   data.append((DockInfraRed.NEAR_CENTER))
+		   data.append(50)
+		   dock_ir_msg.data = data
+		   self._publisher.publish(dock_ir_msg)
+		   self._core_pub.publish(sensor_state_msg)
+		else:
+		   data.append((DockInfraRed.NEAR_CENTER))
+		   data.append((DockInfraRed.NEAR_CENTER))
+		   data.append((DockInfraRed.NEAR_CENTER))
+		   dock_ir_msg.data = data
+		   self._publisher.publish(dock_ir_msg)
+		   self._core_pub.publish(sensor_state_msg)
 	  elif sensor_distance <= 0.45:
 	      sensor_state_msg.charger = SensorState.DOCKING_CHARGING
 	      self._core_pub.publish(sensor_state_msg)

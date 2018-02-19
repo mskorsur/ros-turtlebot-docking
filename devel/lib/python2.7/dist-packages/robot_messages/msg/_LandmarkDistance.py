@@ -7,14 +7,15 @@ import struct
 
 
 class LandmarkDistance(genpy.Message):
-  _md5sum = "e2f8ddf8c9e39a28149179429f5ae342"
+  _md5sum = "435047e3d21c4581dc109651649042ee"
   _type = "robot_messages/LandmarkDistance"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """string name 	# Name of the simulated docking station landmark
 float64 distance 	# Distance to the landmark, in meters
+float64 z_orientation	# Orientation of the robot, in radians
 """
-  __slots__ = ['name','distance']
-  _slot_types = ['string','float64']
+  __slots__ = ['name','distance','z_orientation']
+  _slot_types = ['string','float64','float64']
 
   def __init__(self, *args, **kwds):
     """
@@ -24,7 +25,7 @@ float64 distance 	# Distance to the landmark, in meters
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       name,distance
+       name,distance,z_orientation
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -37,9 +38,12 @@ float64 distance 	# Distance to the landmark, in meters
         self.name = ''
       if self.distance is None:
         self.distance = 0.
+      if self.z_orientation is None:
+        self.z_orientation = 0.
     else:
       self.name = ''
       self.distance = 0.
+      self.z_orientation = 0.
 
   def _get_types(self):
     """
@@ -62,7 +66,8 @@ float64 distance 	# Distance to the landmark, in meters
         buff.write(struct.pack('<I%sB'%length, length, *_x))
       else:
         buff.write(struct.pack('<I%ss'%length, length, _x))
-      buff.write(_struct_d.pack(self.distance))
+      _x = self
+      buff.write(_struct_2d.pack(_x.distance, _x.z_orientation))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -82,9 +87,10 @@ float64 distance 	# Distance to the landmark, in meters
         self.name = str[start:end].decode('utf-8')
       else:
         self.name = str[start:end]
+      _x = self
       start = end
-      end += 8
-      (self.distance,) = _struct_d.unpack(str[start:end])
+      end += 16
+      (_x.distance, _x.z_orientation,) = _struct_2d.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -106,7 +112,8 @@ float64 distance 	# Distance to the landmark, in meters
         buff.write(struct.pack('<I%sB'%length, length, *_x))
       else:
         buff.write(struct.pack('<I%ss'%length, length, _x))
-      buff.write(_struct_d.pack(self.distance))
+      _x = self
+      buff.write(_struct_2d.pack(_x.distance, _x.z_orientation))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -127,12 +134,13 @@ float64 distance 	# Distance to the landmark, in meters
         self.name = str[start:end].decode('utf-8')
       else:
         self.name = str[start:end]
+      _x = self
       start = end
-      end += 8
-      (self.distance,) = _struct_d.unpack(str[start:end])
+      end += 16
+      (_x.distance, _x.z_orientation,) = _struct_2d.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
-_struct_d = struct.Struct("<d")
+_struct_2d = struct.Struct("<2d")
