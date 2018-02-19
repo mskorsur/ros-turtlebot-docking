@@ -7,15 +7,17 @@ import struct
 
 
 class LandmarkDistance(genpy.Message):
-  _md5sum = "435047e3d21c4581dc109651649042ee"
+  _md5sum = "a001cb7348c79b1e965248b3cb75752a"
   _type = "robot_messages/LandmarkDistance"
   _has_header = False #flag to mark the presence of a Header object
   _full_text = """string name 	# Name of the simulated docking station landmark
 float64 distance 	# Distance to the landmark, in meters
-float64 z_orientation	# Orientation of the robot, in radians
-"""
-  __slots__ = ['name','distance','z_orientation']
-  _slot_types = ['string','float64','float64']
+float64 quat_orientation_x	# Orientation of the robot, in radians
+float64 quat_orientation_y
+float64 quat_orientation_z
+float64 quat_orientation_w"""
+  __slots__ = ['name','distance','quat_orientation_x','quat_orientation_y','quat_orientation_z','quat_orientation_w']
+  _slot_types = ['string','float64','float64','float64','float64','float64']
 
   def __init__(self, *args, **kwds):
     """
@@ -25,7 +27,7 @@ float64 z_orientation	# Orientation of the robot, in radians
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       name,distance,z_orientation
+       name,distance,quat_orientation_x,quat_orientation_y,quat_orientation_z,quat_orientation_w
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -38,12 +40,21 @@ float64 z_orientation	# Orientation of the robot, in radians
         self.name = ''
       if self.distance is None:
         self.distance = 0.
-      if self.z_orientation is None:
-        self.z_orientation = 0.
+      if self.quat_orientation_x is None:
+        self.quat_orientation_x = 0.
+      if self.quat_orientation_y is None:
+        self.quat_orientation_y = 0.
+      if self.quat_orientation_z is None:
+        self.quat_orientation_z = 0.
+      if self.quat_orientation_w is None:
+        self.quat_orientation_w = 0.
     else:
       self.name = ''
       self.distance = 0.
-      self.z_orientation = 0.
+      self.quat_orientation_x = 0.
+      self.quat_orientation_y = 0.
+      self.quat_orientation_z = 0.
+      self.quat_orientation_w = 0.
 
   def _get_types(self):
     """
@@ -67,7 +78,7 @@ float64 z_orientation	# Orientation of the robot, in radians
       else:
         buff.write(struct.pack('<I%ss'%length, length, _x))
       _x = self
-      buff.write(_struct_2d.pack(_x.distance, _x.z_orientation))
+      buff.write(_struct_5d.pack(_x.distance, _x.quat_orientation_x, _x.quat_orientation_y, _x.quat_orientation_z, _x.quat_orientation_w))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -89,8 +100,8 @@ float64 z_orientation	# Orientation of the robot, in radians
         self.name = str[start:end]
       _x = self
       start = end
-      end += 16
-      (_x.distance, _x.z_orientation,) = _struct_2d.unpack(str[start:end])
+      end += 40
+      (_x.distance, _x.quat_orientation_x, _x.quat_orientation_y, _x.quat_orientation_z, _x.quat_orientation_w,) = _struct_5d.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -113,7 +124,7 @@ float64 z_orientation	# Orientation of the robot, in radians
       else:
         buff.write(struct.pack('<I%ss'%length, length, _x))
       _x = self
-      buff.write(_struct_2d.pack(_x.distance, _x.z_orientation))
+      buff.write(_struct_5d.pack(_x.distance, _x.quat_orientation_x, _x.quat_orientation_y, _x.quat_orientation_z, _x.quat_orientation_w))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
 
@@ -136,11 +147,11 @@ float64 z_orientation	# Orientation of the robot, in radians
         self.name = str[start:end]
       _x = self
       start = end
-      end += 16
-      (_x.distance, _x.z_orientation,) = _struct_2d.unpack(str[start:end])
+      end += 40
+      (_x.distance, _x.quat_orientation_x, _x.quat_orientation_y, _x.quat_orientation_z, _x.quat_orientation_w,) = _struct_5d.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
-_struct_2d = struct.Struct("<2d")
+_struct_5d = struct.Struct("<5d")

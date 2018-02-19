@@ -21,7 +21,10 @@ class LandmarkMonitor(object):
     def odomCallback(self, msg):
 	x = msg.pose.pose.position.x
 	y = msg.pose.pose.position.y
-	z_orient = msg.pose.pose.orientation.z
+	quat_orientation_x = msg.pose.pose.orientation.x
+	quat_orientation_y = msg.pose.pose.orientation.y
+	quat_orientation_z = msg.pose.pose.orientation.z
+	quat_orientation_w = msg.pose.pose.orientation.w
 	closest_name = None
 	closest_distance = None
 	for l_name, l_x, l_y in self._landmarks:
@@ -32,7 +35,10 @@ class LandmarkMonitor(object):
 	landmark_msg = LandmarkDistance()
 	landmark_msg.name = closest_name
 	landmark_msg.distance = closest_distance
-	landmark_msg.z_orientation = z_orient
+	landmark_msg.quat_orientation_x = quat_orientation_x
+	landmark_msg.quat_orientation_y = quat_orientation_y
+	landmark_msg.quat_orientation_z = quat_orientation_z
+	landmark_msg.quat_orientation_w = quat_orientation_w
 	self._publisher.publish(landmark_msg)
     
     

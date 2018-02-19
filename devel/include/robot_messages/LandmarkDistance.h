@@ -26,12 +26,18 @@ struct LandmarkDistance_
   LandmarkDistance_()
     : name()
     , distance(0.0)
-    , z_orientation(0.0)  {
+    , quat_orientation_x(0.0)
+    , quat_orientation_y(0.0)
+    , quat_orientation_z(0.0)
+    , quat_orientation_w(0.0)  {
     }
   LandmarkDistance_(const ContainerAllocator& _alloc)
     : name(_alloc)
     , distance(0.0)
-    , z_orientation(0.0)  {
+    , quat_orientation_x(0.0)
+    , quat_orientation_y(0.0)
+    , quat_orientation_z(0.0)
+    , quat_orientation_w(0.0)  {
   (void)_alloc;
     }
 
@@ -43,8 +49,17 @@ struct LandmarkDistance_
    typedef double _distance_type;
   _distance_type distance;
 
-   typedef double _z_orientation_type;
-  _z_orientation_type z_orientation;
+   typedef double _quat_orientation_x_type;
+  _quat_orientation_x_type quat_orientation_x;
+
+   typedef double _quat_orientation_y_type;
+  _quat_orientation_y_type quat_orientation_y;
+
+   typedef double _quat_orientation_z_type;
+  _quat_orientation_z_type quat_orientation_z;
+
+   typedef double _quat_orientation_w_type;
+  _quat_orientation_w_type quat_orientation_w;
 
 
 
@@ -123,12 +138,12 @@ struct MD5Sum< ::robot_messages::LandmarkDistance_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "435047e3d21c4581dc109651649042ee";
+    return "a001cb7348c79b1e965248b3cb75752a";
   }
 
   static const char* value(const ::robot_messages::LandmarkDistance_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x435047e3d21c4581ULL;
-  static const uint64_t static_value2 = 0xdc109651649042eeULL;
+  static const uint64_t static_value1 = 0xa001cb7348c79b1eULL;
+  static const uint64_t static_value2 = 0x965248b3cb75752aULL;
 };
 
 template<class ContainerAllocator>
@@ -149,7 +164,10 @@ struct Definition< ::robot_messages::LandmarkDistance_<ContainerAllocator> >
   {
     return "string name 	# Name of the simulated docking station landmark\n\
 float64 distance 	# Distance to the landmark, in meters\n\
-float64 z_orientation	# Orientation of the robot, in radians\n\
+float64 quat_orientation_x	# Orientation of the robot, in radians\n\
+float64 quat_orientation_y\n\
+float64 quat_orientation_z\n\
+float64 quat_orientation_w\n\
 ";
   }
 
@@ -170,7 +188,10 @@ namespace serialization
     {
       stream.next(m.name);
       stream.next(m.distance);
-      stream.next(m.z_orientation);
+      stream.next(m.quat_orientation_x);
+      stream.next(m.quat_orientation_y);
+      stream.next(m.quat_orientation_z);
+      stream.next(m.quat_orientation_w);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -193,8 +214,14 @@ struct Printer< ::robot_messages::LandmarkDistance_<ContainerAllocator> >
     Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.name);
     s << indent << "distance: ";
     Printer<double>::stream(s, indent + "  ", v.distance);
-    s << indent << "z_orientation: ";
-    Printer<double>::stream(s, indent + "  ", v.z_orientation);
+    s << indent << "quat_orientation_x: ";
+    Printer<double>::stream(s, indent + "  ", v.quat_orientation_x);
+    s << indent << "quat_orientation_y: ";
+    Printer<double>::stream(s, indent + "  ", v.quat_orientation_y);
+    s << indent << "quat_orientation_z: ";
+    Printer<double>::stream(s, indent + "  ", v.quat_orientation_z);
+    s << indent << "quat_orientation_w: ";
+    Printer<double>::stream(s, indent + "  ", v.quat_orientation_w);
   }
 };
 

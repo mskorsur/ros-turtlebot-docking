@@ -5,4 +5,4 @@ Description: Description of robot_controller
 Version: 0.0.0
 Cflags: 
 Libs: -L/home/user/Documents/ros-turtlebot-docking/devel/lib 
-Requires: kobuki_msgs nav_msgs robot_messages roscpp rospy std_msgs
+Requires: kobuki_msgs nav_msgs robot_messages roscpp rospy std_msgs tf

@@ -3,6 +3,12 @@
           NAME
           DISTANCE-VAL
           DISTANCE
-          Z_ORIENTATION-VAL
-          Z_ORIENTATION
+          QUAT_ORIENTATION_X-VAL
+          QUAT_ORIENTATION_X
+          QUAT_ORIENTATION_Y-VAL
+          QUAT_ORIENTATION_Y
+          QUAT_ORIENTATION_Z-VAL
+          QUAT_ORIENTATION_Z
+          QUAT_ORIENTATION_W-VAL
+          QUAT_ORIENTATION_W
 ))

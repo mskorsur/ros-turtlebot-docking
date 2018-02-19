@@ -17,9 +17,24 @@
     :initarg :distance
     :type cl:float
     :initform 0.0)
-   (z_orientation
-    :reader z_orientation
-    :initarg :z_orientation
+   (quat_orientation_x
+    :reader quat_orientation_x
+    :initarg :quat_orientation_x
+    :type cl:float
+    :initform 0.0)
+   (quat_orientation_y
+    :reader quat_orientation_y
+    :initarg :quat_orientation_y
+    :type cl:float
+    :initform 0.0)
+   (quat_orientation_z
+    :reader quat_orientation_z
+    :initarg :quat_orientation_z
+    :type cl:float
+    :initform 0.0)
+   (quat_orientation_w
+    :reader quat_orientation_w
+    :initarg :quat_orientation_w
     :type cl:float
     :initform 0.0))
 )
@@ -42,10 +57,25 @@
   (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader robot_messages-msg:distance-val is deprecated.  Use robot_messages-msg:distance instead.")
   (distance m))
 
-(cl:ensure-generic-function 'z_orientation-val :lambda-list '(m))
-(cl:defmethod z_orientation-val ((m <LandmarkDistance>))
-  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader robot_messages-msg:z_orientation-val is deprecated.  Use robot_messages-msg:z_orientation instead.")
-  (z_orientation m))
+(cl:ensure-generic-function 'quat_orientation_x-val :lambda-list '(m))
+(cl:defmethod quat_orientation_x-val ((m <LandmarkDistance>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader robot_messages-msg:quat_orientation_x-val is deprecated.  Use robot_messages-msg:quat_orientation_x instead.")
+  (quat_orientation_x m))
+
+(cl:ensure-generic-function 'quat_orientation_y-val :lambda-list '(m))
+(cl:defmethod quat_orientation_y-val ((m <LandmarkDistance>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader robot_messages-msg:quat_orientation_y-val is deprecated.  Use robot_messages-msg:quat_orientation_y instead.")
+  (quat_orientation_y m))
+
+(cl:ensure-generic-function 'quat_orientation_z-val :lambda-list '(m))
+(cl:defmethod quat_orientation_z-val ((m <LandmarkDistance>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader robot_messages-msg:quat_orientation_z-val is deprecated.  Use robot_messages-msg:quat_orientation_z instead.")
+  (quat_orientation_z m))
+
+(cl:ensure-generic-function 'quat_orientation_w-val :lambda-list '(m))
+(cl:defmethod quat_orientation_w-val ((m <LandmarkDistance>))
+  (roslisp-msg-protocol:msg-deprecation-warning "Using old-style slot reader robot_messages-msg:quat_orientation_w-val is deprecated.  Use robot_messages-msg:quat_orientation_w instead.")
+  (quat_orientation_w m))
 (cl:defmethod roslisp-msg-protocol:serialize ((msg <LandmarkDistance>) ostream)
   "Serializes a message object of type '<LandmarkDistance>"
   (cl:let ((__ros_str_len (cl:length (cl:slot-value msg 'name))))
@@ -63,7 +93,34 @@
     (cl:write-byte (cl:ldb (cl:byte 8 40) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 48) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 56) bits) ostream))
-  (cl:let ((bits (roslisp-utils:encode-double-float-bits (cl:slot-value msg 'z_orientation))))
+  (cl:let ((bits (roslisp-utils:encode-double-float-bits (cl:slot-value msg 'quat_orientation_x))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 32) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 40) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 48) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 56) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-double-float-bits (cl:slot-value msg 'quat_orientation_y))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 32) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 40) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 48) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 56) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-double-float-bits (cl:slot-value msg 'quat_orientation_z))))
+    (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 24) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 32) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 40) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 48) bits) ostream)
+    (cl:write-byte (cl:ldb (cl:byte 8 56) bits) ostream))
+  (cl:let ((bits (roslisp-utils:encode-double-float-bits (cl:slot-value msg 'quat_orientation_w))))
     (cl:write-byte (cl:ldb (cl:byte 8 0) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 8) bits) ostream)
     (cl:write-byte (cl:ldb (cl:byte 8 16) bits) ostream)
@@ -102,7 +159,37 @@
       (cl:setf (cl:ldb (cl:byte 8 40) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 48) bits) (cl:read-byte istream))
       (cl:setf (cl:ldb (cl:byte 8 56) bits) (cl:read-byte istream))
-    (cl:setf (cl:slot-value msg 'z_orientation) (roslisp-utils:decode-double-float-bits bits)))
+    (cl:setf (cl:slot-value msg 'quat_orientation_x) (roslisp-utils:decode-double-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 32) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 40) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 48) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 56) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'quat_orientation_y) (roslisp-utils:decode-double-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 32) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 40) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 48) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 56) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'quat_orientation_z) (roslisp-utils:decode-double-float-bits bits)))
+    (cl:let ((bits 0))
+      (cl:setf (cl:ldb (cl:byte 8 0) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 8) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 16) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 24) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 32) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 40) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 48) bits) (cl:read-byte istream))
+      (cl:setf (cl:ldb (cl:byte 8 56) bits) (cl:read-byte istream))
+    (cl:setf (cl:slot-value msg 'quat_orientation_w) (roslisp-utils:decode-double-float-bits bits)))
   msg
 )
 (cl:defmethod roslisp-msg-protocol:ros-datatype ((msg (cl:eql '<LandmarkDistance>)))
@@ -113,19 +200,22 @@
   "robot_messages/LandmarkDistance")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql '<LandmarkDistance>)))
   "Returns md5sum for a message object of type '<LandmarkDistance>"
-  "435047e3d21c4581dc109651649042ee")
+  "a001cb7348c79b1e965248b3cb75752a")
 (cl:defmethod roslisp-msg-protocol:md5sum ((type (cl:eql 'LandmarkDistance)))
   "Returns md5sum for a message object of type 'LandmarkDistance"
-  "435047e3d21c4581dc109651649042ee")
+  "a001cb7348c79b1e965248b3cb75752a")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<LandmarkDistance>)))
   "Returns full string definition for message of type '<LandmarkDistance>"
-  (cl:format cl:nil "string name 	# Name of the simulated docking station landmark~%float64 distance 	# Distance to the landmark, in meters~%float64 z_orientation	# Orientation of the robot, in radians~%~%~%"))
+  (cl:format cl:nil "string name 	# Name of the simulated docking station landmark~%float64 distance 	# Distance to the landmark, in meters~%float64 quat_orientation_x	# Orientation of the robot, in radians~%float64 quat_orientation_y~%float64 quat_orientation_z~%float64 quat_orientation_w~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'LandmarkDistance)))
   "Returns full string definition for message of type 'LandmarkDistance"
-  (cl:format cl:nil "string name 	# Name of the simulated docking station landmark~%float64 distance 	# Distance to the landmark, in meters~%float64 z_orientation	# Orientation of the robot, in radians~%~%~%"))
+  (cl:format cl:nil "string name 	# Name of the simulated docking station landmark~%float64 distance 	# Distance to the landmark, in meters~%float64 quat_orientation_x	# Orientation of the robot, in radians~%float64 quat_orientation_y~%float64 quat_orientation_z~%float64 quat_orientation_w~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <LandmarkDistance>))
   (cl:+ 0
      4 (cl:length (cl:slot-value msg 'name))
+     8
+     8
+     8
      8
      8
 ))
@@ -134,5 +224,8 @@
   (cl:list 'LandmarkDistance
     (cl:cons ':name (name msg))
     (cl:cons ':distance (distance msg))
-    (cl:cons ':z_orientation (z_orientation msg))
+    (cl:cons ':quat_orientation_x (quat_orientation_x msg))
+    (cl:cons ':quat_orientation_y (quat_orientation_y msg))
+    (cl:cons ':quat_orientation_z (quat_orientation_z msg))
+    (cl:cons ':quat_orientation_w (quat_orientation_w msg))
 ))
