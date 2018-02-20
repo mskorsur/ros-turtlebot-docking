@@ -13,6 +13,7 @@ class RobotController(object):
       def __init__(self, publisher, core_pub):
 	  self._publisher = publisher
 	  self._core_pub = core_pub
+	  self._previous_sensor = None
 
 
       def distanceCallback(self, msg):
@@ -24,6 +25,10 @@ class RobotController(object):
 	  yaw = None
 	  orientation_list = [msg.quat_orientation_x, msg.quat_orientation_y, msg.quat_orientation_z, msg.quat_orientation_w]
 	  (roll, pitch, yaw) = euler_from_quaternion (orientation_list)
+	  
+	  #set _previous_sensor initial value
+	  if self._previous_sensor is None:
+	     self._previous_sensor = sensor_name
 	  
 	  #create publishing dock_ir message and populate header
 	  dock_ir_msg = DockInfraRed()
@@ -45,7 +50,7 @@ class RobotController(object):
       
       def rightSensorDetected(self, dock_ir_msg, sensor_distance, sensor_state_msg, robot_orientation):
 	  data = []
-	  if sensor_distance <= 2.5 and sensor_distance > 0.8:
+	  if sensor_distance <= 2.5 and sensor_distance > 1:
 	      if robot_orientation >= -95 and robot_orientation <= -65:
 		 data.append(50)
 		 data.append(50)
@@ -53,6 +58,7 @@ class RobotController(object):
 		 dock_ir_msg.data = data
 		 self._publisher.publish(dock_ir_msg)
 	         self._core_pub.publish(sensor_state_msg)
+	         self._previous_sensor = "Right Sensor"
 	      else:
 		 data.append((DockInfraRed.FAR_RIGHT))
 		 data.append((DockInfraRed.FAR_RIGHT))
@@ -60,7 +66,8 @@ class RobotController(object):
 		 dock_ir_msg.data = data
 		 self._publisher.publish(dock_ir_msg)
 	         self._core_pub.publish(sensor_state_msg)
-	  elif sensor_distance <= 0.8:
+	         self._previous_sensor = "Right Sensor"
+	  elif sensor_distance <= 1:
 	      if robot_orientation >= -95 and robot_orientation <= -80:
 		 data.append(50)
 		 data.append(50)
@@ -68,6 +75,7 @@ class RobotController(object):
 	         dock_ir_msg.data = data
 	         self._publisher.publish(dock_ir_msg)
 	         self._core_pub.publish(sensor_state_msg)
+	         self._previous_sensor = "Right Sensor"
 	      else:
 		 data.append((DockInfraRed.NEAR_RIGHT))
 	         data.append((DockInfraRed.NEAR_RIGHT))
@@ -75,10 +83,11 @@ class RobotController(object):
 	         dock_ir_msg.data = data
 	         self._publisher.publish(dock_ir_msg)
 	         self._core_pub.publish(sensor_state_msg)
+	         self._previous_sensor = "Right Sensor"
       
       def leftSensorDetected(self, dock_ir_msg, sensor_distance, sensor_state_msg, robot_orientation):
 	  data = []
-	  if sensor_distance <= 2.5 and sensor_distance > 0.8:
+	  if sensor_distance <= 2.5 and sensor_distance > 1:
 	      if robot_orientation >= 65 and robot_orientation <= 95:
 		 data.append((DockInfraRed.FAR_LEFT)) 
 	         data.append(50)
@@ -86,6 +95,7 @@ class RobotController(object):
 	         dock_ir_msg.data = data
 	         self._publisher.publish(dock_ir_msg)
 	         self._core_pub.publish(sensor_state_msg)
+	         self._previous_sensor = "Left Sensor"
 	      else:
 		 data.append((DockInfraRed.FAR_LEFT)) 
 	         data.append((DockInfraRed.FAR_LEFT))
@@ -93,7 +103,8 @@ class RobotController(object):
 	         dock_ir_msg.data = data
 	         self._publisher.publish(dock_ir_msg)
 	         self._core_pub.publish(sensor_state_msg)
-	  elif sensor_distance <= 0.8:
+	         self._previous_sensor = "Left Sensor"
+	  elif sensor_distance <= 1:
 	      if robot_orientation >= 80 and robot_orientation <= 95:
 		 data.append((DockInfraRed.NEAR_LEFT))
 		 data.append(50)
@@ -101,6 +112,7 @@ class RobotController(object):
 		 dock_ir_msg.data = data
 	         self._publisher.publish(dock_ir_msg)
 		 self._core_pub.publish(sensor_state_msg)
+		 self._previous_sensor = "Left Sensor"
 	      else:
 		 data.append((DockInfraRed.NEAR_LEFT))
 	         data.append((DockInfraRed.NEAR_LEFT))
@@ -108,11 +120,12 @@ class RobotController(object):
 	         dock_ir_msg.data = data
 	         self._publisher.publish(dock_ir_msg)
 	         self._core_pub.publish(sensor_state_msg)
+	         self._previous_sensor = "Left Sensor"
 		
       
       def centerSensorDetected(self, dock_ir_msg, sensor_distance, sensor_state_msg, robot_orientation):
 	  data = []
-	  if sensor_distance <= 4 and sensor_distance > 0.8:
+	  if sensor_distance <= 4 and sensor_distance > 1:
 	     if robot_orientation >= -10 and robot_orientation <= 10:
 		data.append((DockInfraRed.FAR_CENTER)) 
 		data.append((DockInfraRed.FAR_CENTER)) 
@@ -120,13 +133,22 @@ class RobotController(object):
 		dock_ir_msg.data = data
 		self._publisher.publish(dock_ir_msg)
 		self._core_pub.publish(sensor_state_msg)
+		self._previous_sensor = "Center Sensor"
 	     else:
-	        data.append((DockInfraRed.NEAR_RIGHT)) 
-		data.append((DockInfraRed.NEAR_RIGHT)) 
-		data.append((DockInfraRed.NEAR_RIGHT))
-		dock_ir_msg.data = data
-		self._publisher.publish(dock_ir_msg)
-		self._core_pub.publish(sensor_state_msg)
+	        if self._previous_sensor == "Right Sensor":
+		   data.append((DockInfraRed.FAR_LEFT)) 
+		   data.append((DockInfraRed.FAR_LEFT)) 
+		   data.append((DockInfraRed.FAR_LEFT))
+		   dock_ir_msg.data = data
+		   self._publisher.publish(dock_ir_msg)
+		   self._core_pub.publish(sensor_state_msg)
+		elif self._previous_sensor == "Left Sensor":
+		   data.append((DockInfraRed.FAR_RIGHT)) 
+		   data.append((DockInfraRed.FAR_RIGHT)) 
+		   data.append((DockInfraRed.FAR_RIGHT))
+		   dock_ir_msg.data = data
+		   self._publisher.publish(dock_ir_msg)
+		   self._core_pub.publish(sensor_state_msg)
 	  elif sensor_distance <= 1.0 and sensor_distance > 0.5:
 		if robot_orientation >= -5 and robot_orientation <= 5:
 		   data.append((DockInfraRed.NEAR_CENTER))
@@ -135,6 +157,7 @@ class RobotController(object):
 		   dock_ir_msg.data = data
 		   self._publisher.publish(dock_ir_msg)
 		   self._core_pub.publish(sensor_state_msg)
+		   self._previous_sensor = "Center Sensor"
 		else:
 		   data.append((DockInfraRed.NEAR_CENTER))
 		   data.append((DockInfraRed.NEAR_CENTER))
@@ -142,6 +165,7 @@ class RobotController(object):
 		   dock_ir_msg.data = data
 		   self._publisher.publish(dock_ir_msg)
 		   self._core_pub.publish(sensor_state_msg)
+		   self._previous_sensor = "Center Sensor"
 	  elif sensor_distance <= 0.5:
 	      sensor_state_msg.charger = SensorState.DOCKING_CHARGING
 	      self._core_pub.publish(sensor_state_msg)
